@@ -1,0 +1,16 @@
+{
+  "name": "personal-website",
+  "version": "1.0.0",
+  "description": "My Personal Website",
+  "main": "src/index.ts",
+  "repository": "https://github.com/Stephen10121/personal-website.git",
+  "author": "Stephen Gruzin <stephengrzn@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "start": "node --loader ts-node/esm src/index.ts"
+  }
+}
