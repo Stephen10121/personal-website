@@ -4,7 +4,9 @@ import { authenticateRouter } from "./authenticate";
 // import { startWebsocketServer } from "./websocket";
 import cookieParser from "cookie-parser";
 import { socketConnection } from "./socket";
+import { createConnection } from "typeorm";
 import { userLogin } from "./userData";
+import { createAccessToken } from "./tokenGen";
 
 const app = express();
 const PORT = 3000 || process.env.PORT;
@@ -29,7 +31,8 @@ app.use(cookieParser(), express.json(), express.static('frontend/dist'), express
 app.use(authenticateRouter);
 
 app.post("/auth", async (req, res) => {
-    console.log(req.body);
+    res.json({ error: false });
+    
     const newData = req.body;
     const result = await userLogin({
       hash: newData.data,
@@ -37,27 +40,27 @@ app.post("/auth", async (req, res) => {
       email: newData.email,
       username: newData.username,
     });
+
+    if (!result) {
+        io.to(req.body.key).emit("auth-failed", "");
+        return;
+    }
+    const result2 = result;
+    result2.id = 0;
+
     io.to(req.body.key).emit("auth", {
-        userData: result,
-        token: "accessToken",
+        userData: result2,
+        token: createAccessToken(result),
     });
-    // if (result.error !== 200) {
-    //   console.log(result.errorMessage);
-    //   return res.json({ msg: "Something went wrong." });
-    // }
-    // delete result.data.userInfo.id;
-    // const accessToken = jwt.sign(
-    //   result.data.userInfo,
-    //   process.env.ACCESS_TOKEN_SECRET
-    // );
-    // io.to(req.body.key).emit("auth", {
-    //   userData: result.data.userInfo,
-    //   token: accessToken,
-    // });
   });
 
-// startWebsocketServer(server);
+  // startWebsocketServer(server);
+  createConnection().then(async (_data) => {
+      console.log("[server] Connection created to database.");
+  });
+
 socketConnection(io);
+
 
 server.listen(PORT, () => {
     console.log(`[server] Server running on port ${PORT}`);
