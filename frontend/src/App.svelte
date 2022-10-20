@@ -2,6 +2,7 @@
   import { Router, Route } from "svelte-navigator";
   // @ts-ignore
   import CheckLog from "./lib/CheckLog.svelte";
+  import Logout from "./lib/Logout.svelte";
   import NotLogged from "./lib/Notlogged.svelte";
   // import Logout from "./lib/Logout.svelte";
 </script>
@@ -15,7 +16,7 @@
     <CheckLog />
   </Route>
 
-  <!-- <Route path="/logout" primary={false}>
+  <Route path="/logout" primary={false}>
     <Logout />
-  </Route> -->
+  </Route>
 </Router>

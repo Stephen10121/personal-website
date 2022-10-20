@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { useNavigate } from "svelte-navigator";
   import Notification from "./Notification.svelte";
   import io from "socket.io-client";
-
+  import { useNavigate } from "svelte-navigator";
+  const navigate = useNavigate();
   const socket = io("http://192.168.0.24:3000");
 
   socket.on("auth", (data) => {
     console.log(data);
+    document.cookie = `G_DASH=${data.token}`;
+    navigate("/");
   });
 
   type Notification = {
@@ -15,7 +17,6 @@
     message: string;
   };
 
-  const navigate = useNavigate();
   let notification: Notification = {
     show: false,
     status: "success",
