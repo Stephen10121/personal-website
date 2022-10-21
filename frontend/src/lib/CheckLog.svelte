@@ -4,6 +4,7 @@
   import WebsiteSection from "./WebsiteSection.svelte";
   import StructurePage from "./StructurePage.svelte";
   import WebsitePage from "./WebsitePage.svelte";
+  import { POST_SERVER } from "../ip";
   export let afterLoginRedirect: string;
   export let redirect: "home" | "website" | "structure" | "specificWebsite";
   export let id: null | string;
@@ -27,14 +28,35 @@
     //return unescape(dc.substring(begin + prefix.length, end));
     return decodeURI(dc.substring(begin + prefix.length, end));
   }
-  const cookie = getCookie("G_DASH");
-  if (!cookie) {
+  function redirectTo() {
     if (afterLoginRedirect) {
       navigate(`/login?redirect=${afterLoginRedirect}`);
     } else {
       navigate("/login");
     }
+    return;
   }
+  async function checkLogin() {
+    const cookie = getCookie("G_DASH");
+    if (!cookie) {
+      redirectTo();
+      return;
+    }
+    const backendValidate = await fetch(`${POST_SERVER}/validate`, {
+      headers: { Authentication: `Bearer ${cookie}` },
+    });
+    if (!backendValidate) {
+      redirectTo();
+      return;
+    }
+    const backendValidateJSON = await backendValidate.json();
+    if (backendValidateJSON.error) {
+      redirectTo();
+      return;
+    }
+  }
+
+  checkLogin();
 </script>
 
 {#if redirect === "home"}

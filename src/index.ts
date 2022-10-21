@@ -7,6 +7,8 @@ import { socketConnection } from "./socket";
 import { createConnection } from "typeorm";
 import { userLogin } from "./userData";
 import { createAccessToken } from "./tokenGen";
+import { homePageRoutes } from "./routes/homePageRoutes";
+import { User } from "./entity/User";
 
 const app = express();
 const PORT = 3000 || process.env.PORT;
@@ -29,6 +31,7 @@ app.use((_req, res, next) => {
 app.use(cookieParser(), express.json(), express.static('frontend/dist'), express.urlencoded({ extended: true }));
 
 app.use(authenticateRouter);
+app.use(homePageRoutes);
 
 app.post("/auth", async (req, res) => {
     res.json({ error: false });
@@ -45,7 +48,7 @@ app.post("/auth", async (req, res) => {
         io.to(req.body.key).emit("auth-failed", "");
         return;
     }
-    const result2 = result;
+    const result2 = Object.create(result) as User;
     result2.id = 0;
 
     io.to(req.body.key).emit("auth", {

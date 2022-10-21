@@ -2,9 +2,9 @@
   import Notification from "./Notification.svelte";
   import io from "socket.io-client";
   import { useNavigate } from "svelte-navigator";
-  import { POST_SERVER } from "../ip";
+  import { AUTH_SERVER, POST_SERVER } from "../ip";
   const navigate = useNavigate();
-  const socket = io("http://192.168.0.24:3000");
+  const socket = io(POST_SERVER);
   const url = new URL(window.location.href);
 
   const redirect = url.searchParams.get("redirect");
@@ -95,7 +95,7 @@
 
   const loginIt = (key: string) => {
     popupCenter({
-      postServer: POST_SERVER,
+      postServer: AUTH_SERVER,
       key,
       title: "Authenticate",
       w: 520,
