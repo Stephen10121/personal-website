@@ -2,6 +2,7 @@
   import Notification from "./Notification.svelte";
   import io from "socket.io-client";
   import { useNavigate } from "svelte-navigator";
+  import { POST_SERVER } from "../ip";
   const navigate = useNavigate();
   const socket = io("http://192.168.0.24:3000");
 
@@ -87,7 +88,7 @@
 
   const loginIt = (key: string) => {
     popupCenter({
-      postServer: `http://75.164.32.219:3000/auth`,
+      postServer: POST_SERVER,
       key,
       title: "Authenticate",
       w: 520,

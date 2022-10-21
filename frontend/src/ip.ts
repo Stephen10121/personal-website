@@ -1,0 +1,1 @@
+export const POST_SERVER = "http://75.164.80.161:3000/auth"

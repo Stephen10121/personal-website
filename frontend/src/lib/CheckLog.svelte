@@ -3,7 +3,9 @@
   import { useNavigate } from "svelte-navigator";
   import WebsiteSection from "./WebsiteSection.svelte";
   import StructurePage from "./StructurePage.svelte";
-  export let redirect: "home" | "website" | "structure";
+  import WebsitePage from "./WebsitePage.svelte";
+  export let redirect: "home" | "website" | "structure" | "specificWebsite";
+  export let id: null | string;
   const navigate = useNavigate();
   function getCookie(name) {
     var dc = document.cookie;
@@ -35,4 +37,6 @@
   <WebsiteSection />
 {:else if redirect === "structure"}
   <StructurePage />
+{:else if redirect === "specificWebsite"}
+  <WebsitePage {id} />
 {/if}
