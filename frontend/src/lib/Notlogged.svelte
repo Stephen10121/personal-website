@@ -87,7 +87,7 @@
 
   const loginIt = (key: string) => {
     popupCenter({
-      postServer: `http://97.120.84.53:3000/auth`,
+      postServer: `http://75.164.32.219:3000/auth`,
       key,
       title: "Authenticate",
       w: 520,

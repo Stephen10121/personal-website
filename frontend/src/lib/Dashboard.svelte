@@ -2,7 +2,7 @@
   import Header from "./Header.svelte";
 </script>
 
-<Header />
+<Header endpoint="home" />
 <main> main </main>
 
 <style>

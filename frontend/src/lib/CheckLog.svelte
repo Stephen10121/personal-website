@@ -1,6 +1,9 @@
 <script lang="ts">
   import Dashboard from "./Dashboard.svelte";
   import { useNavigate } from "svelte-navigator";
+  import WebsiteSection from "./WebsiteSection.svelte";
+  import StructurePage from "./StructurePage.svelte";
+  export let redirect: "home" | "website" | "structure";
   const navigate = useNavigate();
   function getCookie(name) {
     var dc = document.cookie;
@@ -26,4 +29,10 @@
   }
 </script>
 
-<Dashboard />
+{#if redirect === "home"}
+  <Dashboard />
+{:else if redirect === "website"}
+  <WebsiteSection />
+{:else if redirect === "structure"}
+  <StructurePage />
+{/if}

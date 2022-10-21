@@ -13,7 +13,15 @@
   </Route>
 
   <Route path="/" primary={false}>
-    <CheckLog />
+    <CheckLog redirect="home" />
+  </Route>
+
+  <Route path="/websites" primary={false}>
+    <CheckLog redirect="website" />
+  </Route>
+
+  <Route path="/structure" primary={false}>
+    <CheckLog redirect="structure" />
   </Route>
 
   <Route path="/logout" primary={false}>
