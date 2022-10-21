@@ -54,6 +54,7 @@
       redirectTo();
       return;
     }
+    console.log(backendValidateJSON.userData);
   }
 
   checkLogin();

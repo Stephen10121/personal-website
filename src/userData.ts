@@ -10,6 +10,13 @@ interface UserData {
 export async function userLogin(data: UserData) {
     const findUser = await User.findOne({ where: { usersHash: data.hash } });
     if (findUser) {
+        if (data.name !== findUser.usersRName) {
+            try {
+                await User.update({ id: findUser.id }, { usersRName: data.name });
+            } catch (err) {
+                return false;
+            }
+        }
         return findUser;
     }
     try {

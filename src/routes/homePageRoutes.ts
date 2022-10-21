@@ -10,5 +10,7 @@ homePageRoutes.get("/validate", async (req, res) => {
         return;
     }
 
-    res.json({error: false, msg: "Authorized"});
+    const user = authorize.user as any;
+    delete user.id;
+    res.json({error: false, msg: "Authorized", userData: user});
 });
