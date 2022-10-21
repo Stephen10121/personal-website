@@ -5,11 +5,18 @@
   import { POST_SERVER } from "../ip";
   const navigate = useNavigate();
   const socket = io("http://192.168.0.24:3000");
+  const url = new URL(window.location.href);
+
+  const redirect = url.searchParams.get("redirect");
 
   socket.on("auth", (data) => {
     console.log(data);
     document.cookie = `G_DASH=${data.token}`;
-    navigate("/");
+    if (!redirect) {
+      navigate("/");
+    } else {
+      navigate(redirect);
+    }
   });
 
   type Notification = {

@@ -4,9 +4,11 @@
   import WebsiteSection from "./WebsiteSection.svelte";
   import StructurePage from "./StructurePage.svelte";
   import WebsitePage from "./WebsitePage.svelte";
+  export let afterLoginRedirect: string;
   export let redirect: "home" | "website" | "structure" | "specificWebsite";
   export let id: null | string;
   const navigate = useNavigate();
+
   function getCookie(name) {
     var dc = document.cookie;
     var prefix = name + "=";
@@ -27,7 +29,11 @@
   }
   const cookie = getCookie("G_DASH");
   if (!cookie) {
-    navigate("/login");
+    if (afterLoginRedirect) {
+      navigate(`/login?redirect=${afterLoginRedirect}`);
+    } else {
+      navigate("/login");
+    }
   }
 </script>
 

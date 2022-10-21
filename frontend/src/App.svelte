@@ -14,20 +14,24 @@
   </Route>
 
   <Route path="/" primary={false}>
-    <CheckLog redirect="home" id={null} />
+    <CheckLog redirect="home" id={null} afterLoginRedirect={null} />
   </Route>
 
   <Route path="websites/*" primary={false}>
     <Route path="/">
-      <CheckLog redirect="website" id={null} />
+      <CheckLog redirect="website" id={null} afterLoginRedirect="/websites" />
     </Route>
     <Route path=":id" let:params>
-      <CheckLog redirect="specificWebsite" id={params.id} />
+      <CheckLog
+        redirect="specificWebsite"
+        id={params.id}
+        afterLoginRedirect={`/websites/${params.id}`}
+      />
     </Route>
   </Route>
 
   <Route path="structure" primary={false}>
-    <CheckLog redirect="structure" id={null} />
+    <CheckLog redirect="structure" id={null} afterLoginRedirect="/structure" />
   </Route>
 
   <Route path="logout" primary={false}>
