@@ -1,21 +1,25 @@
 <script lang="ts">
+  import { Link } from "svelte-navigator";
   export let status: "online" | "offline";
   export let url: string;
+  export let id: string;
 </script>
 
-<button class="website">
-  <div class="name-info">
-    <h4><slot /></h4>
-    <p>{url}</p>
+<Link to={`/websites/${id}`} class="website">
+  <div class="website">
+    <div class="name-info">
+      <h4><slot /></h4>
+      <p>{url}</p>
+    </div>
+    <div class="status">
+      <div
+        class="light"
+        style="background-color:{status === 'online' ? '#adff2f' : '#666666'}"
+      />
+      <p>{status === "online" ? "Online" : "Offline"}</p>
+    </div>
   </div>
-  <div class="status">
-    <div
-      class="light"
-      style="background-color:{status === 'online' ? '#adff2f' : '#666666'}"
-    />
-    <p>{status === "online" ? "Online" : "Offline"}</p>
-  </div>
-</button>
+</Link>
 
 <style>
   .website {
@@ -32,6 +36,7 @@
     gap: 5px;
     background: none;
     transition: border-width 0.05s linear;
+    color: black;
   }
 
   .website:hover {
