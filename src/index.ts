@@ -11,7 +11,7 @@ import { homePageRoutes } from "./routes/homePageRoutes";
 import { User } from "./entity/User";
 
 const app = express();
-const PORT = 3000 || process.env.PORT;
+const PORT = 4000 || process.env.PORT;
 const server = http.createServer(app);
 
 const io = require("socket.io")(server, {
@@ -28,7 +28,7 @@ app.use((_req, res, next) => {
     next();
 });
 
-app.use(cookieParser(), express.json(), express.static('frontend/dist'), express.urlencoded({ extended: true }));
+app.use(cookieParser(), express.json(), express.urlencoded({ extended: true }));
 
 app.use(authenticateRouter);
 app.use(homePageRoutes);
