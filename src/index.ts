@@ -11,7 +11,7 @@ import { homePageRoutes } from "./routes/homePageRoutes";
 import { User } from "./entity/User";
 
 const app = express();
-const PORT = 4000 || process.env.PORT;
+const PORT = 7400 || process.env.PORT;
 const server = http.createServer(app);
 
 const io = require("socket.io")(server, {

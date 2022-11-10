@@ -25,6 +25,7 @@ export const userAuthorize = async (req: any) => {
     if (!payload) {
         return false;
     }
+    
     const user = await User.findOne({ where: {id: payload.userId} });
 
     if (!user) {
